@@ -1,0 +1,42 @@
+body {
+  font-family: 'Sarabun', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+.school-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 30px 15px;
+  background-color: #fff5e1;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.school-logo {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+  background-color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.school-info h1 {
+  font-size: 26px;
+  color: #b22222;
+  margin: 0;
+  font-weight: 700;
+}
+
+.school-info p {
+  font-size: 16px;
+  color: #555;
+  margin-top: 8px;
+  font-weight: 500;
+}
