@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🏫 ระบบโรงเรียน PRO เต็มฟีเจอร์</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');
+  :root {
+    --color-primary: #1e40af;
+    --color-primary-light: #2563eb;
+    --color-secondary: #14b8a6;
+    --color-bg: #f3f4f6;
+    --color-card-bg: #fff;
+    --color-text: #111827;
+    --color-text-muted: #6b7280;
+    --color-border: #d1d5db;
+    --border-radius: 12px;
+    --shadow: 0 4px 15px rgba(0,0,0,0.12);
+    --transition: 0.3s ease;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin:0;
+    font-family: 'Sarabun', sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header {
+    background: var(--color-primary);
+    color: white;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+    user-select: none;
+  }
+  header .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  header button {
+    background: var(--color-secondary);
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(20,184,166,0.7);
+    transition: background-color var(--transition);
+  }
+  header button:hover {
+    background: #0f766e;
+  }
+  #app {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+  nav.sidebar {
+    width: 260px;
+    background: var(--color-card-bg);
+    border-right: 1px solid var(--color-border);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+  }
+  nav.sidebar a {
+    padding: 1.2rem 2rem;
+    color: var(--color-text);
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-left: 6px solid transparent;
+    font-size: 1.1rem;
+    transition: all var(--transition);
+    cursor: pointer;
+  }
+  nav.sidebar a.active,
+  nav.sidebar a:hover {
+    background: var(--color-primary-light);
+    color: white;
+    border-left-color: var(--color-secondary);
+  }
+  nav.sidebar a .icon {
+    font-size: 1.6rem;
+  }
+  section.content {
+    flex: 1;
+    padding: 2rem 3rem;
+    overflow-y: auto;
+  }
+  h2 {
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .card {
+    background: var(--color-card-bg);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+  }
+  .stats {
+    display: flex;
+    gap: 1.8rem;
+    flex-wrap: wrap;
+  }
+  .stat {
+    background: var(--color-secondary);
+    color: white;
+    flex: 1 1 180px;
+    border-radius: var(--border-radius);
+    padding: 1.4rem 2rem;
+    text-align: center;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(20,184,166,0.6);
+    user-select: none;
+    transition: background-color 0.3s;
+  }
+  .stat:hover {
+    background: #0f766e;
+  }
+  .stat .number {
+    font-size: 3rem;
+    margin-top: 0.4rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 14px;
+    font-size: 1rem;
+  }
+  th, td {
+    padding: 0.9rem 1.4rem;
+    text-align: left;
+  }
+  th {
+    background: var(--color-primary-light);
+    color: white;
+    font-weight: 700;
+    border-radius: 14px 14px 0 0;
+  }
+  tbody tr {
+    background: var(--color-card-bg);
+    box-shadow: var(--shadow);
+    border-radius: 14px;
+    transition: background-color 0.3s;
+  }
+  tbody tr:hover {
+    background: var(--color-primary-light);
+    color: white;
+  }
+  ul.announcement-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  ul.announcement-list li {
+    background: var(--color-primary-light);
+    color: white;
+    padding: 1rem 1.3rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+    font-weight: 600;
+    user-select: none;
+  }
+  button {
+    background: var(--color-primary);
+    border: none;
+    padding: 0.7rem 1.8rem;
+    border-radius: 24px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: background-color var(--transition);
+  }
+  button:hover {
+    background: var(--color-primary-light);
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 1.8px solid var(--color-border);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: 'Sarabun', sans-serif;
+    margin-bottom: 1.2rem;
+    transition: border-color 0.3s;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--color-primary);
+    outline: none;
+  }
+  label {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    display: block;
+    color: var(--color-text-muted);
+  }
+  /* Chat box */
+  .chat-container {
+    max-width: 500px;
+    background: var(--color-card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+  }
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    margin-bottom: 0.8rem;
+  }
+  .chat-message {
+    margin-bottom: 0.7rem;
+    padding: 0.6rem 1rem;
+    border-radius: var(--border-radius);
+    max-width: 80%;
+    line-height: 1.3;
+    word-wrap: break-word;
+  }
+  .chat-message.user {
+    background: var(--color-primary-light);
+    color: white;
+    align-self: flex-end;
+  }
+  .chat-message.admin {
+    background: var(--color-secondary);
+    color: white;
+    align-self: flex-start;
+  }
+  .chat-input {
+    display: flex;
+    gap: 0.8rem;
+  }
+  .chat-input input {
+    flex: 1;
+  }
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav.sidebar {
+      width: 70px;
+      padding: 1rem 0;
+    }
+    nav.sidebar a {
+      padding: 1rem 0;
+      justify-content: center;
+      font-size: 0;
+      border-left: none;
+    }
+    nav.sidebar a .icon {
+      font-size: 1.8rem;
+    }
+    nav.sidebar a .label {
+      display: none;
+    }
+    section.content {
+      padding: 1.5rem 1.5rem;
+    }
+    .stats {
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🏫 โรงเรียน PRO เต็มฟีเจอร์</div>
+  <button id="logout-btn">🚪 ออกจากระบบ</button>
+</header>
+
+<div id="app">
+  <nav class="sidebar" aria-label="Main Navigation">
+    <a href="#" class="active" data-page="dashboard"><span class="icon">🏠</span><span class="label">หน้าหลัก</span></a>
+    <a href="#" data-page="schedule"><span class="icon">📅</span><span class="label">ตารางเรียน</span></a>
+    <a href="#" data-page="grades"><span class="icon">📊</span><span class="label">คะแนน</span></a>
+    <a href="#" data-page="registration"><span class="icon">📝</span><span class="label">ลงทะเบียน</span></a>
+    <a href="#" data-page="assignments"><span class="icon">📂</span><span class="label">ส่งงาน</span></a>
+    <a href="#" data-page="announcement"><span class="icon">📢</span><span class="label">ประกาศ</span></a>
+    <a href="#" data-page="chat"><span class="icon">💬</span><span class="label">แชท</span></a>
+    <a href="#" data-page="profile"><span class="icon">👤</span><span class="label">โปรไฟล์</span></a>
+  </nav>
+
+  <section class="content" role="main">
+
+    <div id="dashboard" class="page" aria-label="Dashboard">
+      <h2>🏠 สวัสดี, <span id="user-name">ครูสมชาย</span>!</h2>
+      <div class="card stats" aria-label="สถิติ">
+        <div class="stat" tabindex="0" aria-label="นักเรียนทั้งหมด 220 คน">
+          👩‍🎓 นักเรียนทั้งหมด
+          <div class="number" id="stat-students">220</div>
+        </div>
+        <div class="stat" tabindex="0" aria-label="ครูทั้งหมด 20 คน">
+          👨‍🏫 ครูทั้งหมด
+          <div class="number" id="stat-teachers">20</div>
+        </div>
+        <div class="stat" tabindex="0" aria-label="วิชาทั้งหมด 38 วิชา">
+          📚 วิชา
+          <div class="number" id="stat-subjects">38</div>
+        </div>
+        <div class="stat" tabindex="0" aria-label="กิจกรรม 4 กิจกรรม">
+          📅 กิจกรรม
+          <div class="number" id="stat-events">4</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="schedule" class="page" style="display:none;" aria-label="ตารางเรียน">
+      <h2>📅 ตารางเรียน</h2>
+      <div class="card" role="region" aria-live="polite">
+        <table aria-describedby="schedule-desc">
+          <caption id="schedule-desc" class="sr-only">ตารางเรียนตามวันและเวลา</caption>
+          <thead>
+            <tr><th scope="col">วัน</th><th scope="col">เวลา</th><th scope="col">วิชา</th><th scope="col">ครูผู้สอน</th></tr>
+          </thead>
+          <tbody id="schedule-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="grades" class="page" style="display:none;" aria-label="คะแนน">
+      <h2>📊 คะแนน</h2>
+      <div class="card" role="region" aria-live="polite">
+        <table aria-describedby="grades-desc">
+          <caption id="grades-desc" class="sr-only">คะแนนและเกรดของนักเรียน</caption>
+          <thead><tr><th scope="col">วิชา</th><th scope="col">คะแนน</th><th scope="col">เกรด</th></tr></thead>
+          <tbody id="grades-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="registration" class="page" style="display:none;" aria-label="ระบบลงทะเบียน">
+      <h2>📝 ลงทะเบียนเรียน</h2>
+      <div class="card">
+        <form id="registration-form" aria-label="ฟอร์มลงทะเบียนเรียน">
+          <label for="student-name">ชื่อนักเรียน</label>
+          <input type="text" id="student-name" name="studentName" placeholder="กรอกชื่อนักเรียน" required />
+
+          <label for="class-select">เลือกชั้นเรียน</label>
+          <select id="class-select" name="classSelect" required>
+            <option value="">-- เลือกชั้นเรียน --</option>
+            <option value="ป.1">ประถมศึกษาปีที่ 1</option>
+            <option value="ป.2">ประถมศึกษาปีที่ 2</option>
+            <option value="ป.3">ประถมศึกษาปีที่ 3</option>
+            <option value="ม.1">มัธยมศึกษาปีที่ 1</option>
+            <option value="ม.2">มัธยมศึกษาปีที่ 2</option>
+            <option value="ม.3">มัธยมศึกษาปีที่ 3</option>
+          </select>
+
+          <label for="parent-contact">เบอร์ติดต่อผู้ปกครอง</label>
+          <input type="tel" id="parent-contact" name="parentContact" placeholder="เบอร์โทรศัพท์" pattern="[0-9]{9,10}" required />
+
+          <button type="submit">ยืนยันลงทะเบียน</button>
+        </form>
+        <div id="registration-result" style="margin-top:1rem;color:green; font-weight:700;"></div>
+      </div>
+    </div>
+
+    <div id="assignments" class="page" style="display:none;" aria-label="ส่งงาน">
+      <h2>📂 ส่งงาน</h2>
+      <div class="card">
+        <form id="assignment-form" aria-label="ฟอร์มส่งงาน">
+          <label for="assignment-subject">วิชา</label>
+          <select id="assignment-subject" name="assignmentSubject" required>
+            <option value="">-- เลือกวิชา --</option>
+            <option value="คณิตศาสตร์">คณิตศาสตร์</option>
+            <option value="วิทยาศาสตร์">วิทยาศาสตร์</option>
+            <option value="ภาษาอังกฤษ">ภาษาอังกฤษ</option>
+          </select>
+
+          <label for="assignment-file">เลือกไฟล์งาน</label>
+          <input type="file" id="assignment-file" name="assignmentFile" accept=".pdf,.doc,.docx,.jpg,.png" required />
+
+          <button type="submit">ส่งงาน</button>
+        </form>
+        <div id="assignment-result" style="margin-top:1rem;color:green; font-weight:700;"></div>
+        <h3 style="margin-top:2rem;">งานที่ส่งล่าสุด</h3>
+        <ul id="assignment-list"></ul>
+      </div>
+    </div>
+
+    <div id="announcement" class="page" style="display:none;" aria-label="ประกาศ">
+      <h2>📢 ประกาศ</h2>
+      <div class="card" role="region" aria-live="polite">
+        <ul class="announcement-list" id="announcement-list"></ul>
+      </div>
+    </div>
+
+    <div id="chat" class="page" style="display:none;" aria-label="แชท">
+      <h2>💬 ห้องแชท</h2>
+      <div class="chat-container" role="region" aria-live="polite" aria-relevant="additions">
+        <div class="chat-messages" id="chat-messages" tabindex="0"></div>
+        <form id="chat-form" class="chat-input" aria-label="ส่งข้อความแชท">
+          <input type="text" id="chat-input" placeholder="พิมพ์ข้อความที่นี่..." aria-label="ข้อความแชท" autocomplete="off" required />
+          <button type="submit">ส่ง</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="profile" class="page" style="display:none;" aria-label="โปรไฟล์">
+      <h2>👤 โปรไฟล์ของฉัน</h2>
+      <div class="card">
+        <p><strong>ชื่อผู้ใช้:</strong> <span id="profile-username">teacher_somchai</span></p>
+        <p><strong>บทบาท:</strong> <span id="profile-role">ครู</span></p>
+        <p><strong>อีเมล:</strong> somchai@example.com</p>
+        <button id="btn-logout-profile">🚪 ออกจากระบบ</button>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<script>
+  // ข้อมูลตัวอย่าง
+  const scheduleData = [
+    { day: "จันทร์", time: "08:00 - 09:30", subject: "คณิตศาสตร์", teacher: "ครูสมชาย" },
+    { day: "อังคาร", time: "09:45 - 11:15", subject: "วิทยาศาสตร์", teacher: "ครูสมหญิง" },
+    { day: "พุธ", time: "10:00 - 11:30", subject: "ภาษาอังกฤษ", teacher: "ครูจอห์น" },
+    { day: "พฤหัส", time: "13:00 - 14:30", subject: "สังคมศึกษา", teacher: "ครูสมหมาย" },
+    { day: "ศุกร์", time: "14:45 - 16:15", subject: "ศิลปะ", teacher: "ครูศิลป์" }
+  ];
+
+  const gradesData = [
+    { subject: "คณิตศาสตร์", score: 88, grade: "A" },
+    { subject: "วิทยาศาสตร์", score: 79, grade: "B+" },
+    { subject: "ภาษาอังกฤษ", score: 85, grade: "A-" },
+    { subject: "สังคมศึกษา", score: 75, grade: "B" }
+  ];
+
+  const announcements = [
+    "เปิดเรียนภาคเรียนที่ 1 วันที่ 1 พฤษภาคม 2568",
+    "ประชุมผู้ปกครองวันเสาร์ที่ 15 มิถุนายน 2568 เวลา 09:00 น.",
+    "กิจกรรมวันวิทยาศาสตร์ 25 สิงหาคม 2568 เชิญชวนนักเรียนเข้าร่วม",
+    "แจ้งปิดเทอมฤดูร้อนตั้งแต่ 1 เมษายน ถึง 31 พฤษภาคม 2568"
+  ];
+
+  // เก็บงานที่ส่ง
+  let assignmentSubmissions = [];
+
+  // Chat message storage (แค่จำลอง)
+  let chatMessages = [
+    { sender: "admin", text: "สวัสดีครับ มีอะไรให้ช่วยไหมครับ?" },
+  ];
+
+  // ชื่อผู้ใช้ (สมมุติ)
+  const currentUser = {
+    name: "ครูสมชาย",
+    username: "teacher_somchai",
+    role: "ครู",
+    email: "somchai@example.com"
+  };
+
+  // ช่วยเปลี่ยนหน้า
+  function switchPage(page) {
+    // ซ่อนทุกหน้า
+    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+    // เอา active class ออกจากเมนู
+    document.querySelectorAll('nav.sidebar a').forEach(a => a.classList.remove('active'));
+
+    // แสดงหน้าที่เลือก
+    const showPage = document.getElementById(page);
+    if(showPage) showPage.style.display = 'block';
+
+    // เพิ่ม active ให้เมนูที่เลือก
+    const menuLink = document.querySelector(`nav.sidebar a[data-page="${page}"]`);
+    if(menuLink) menuLink.classList.add('active');
+  }
+
+  // โหลดตารางเรียน
+  function loadSchedule() {
+    const tbody = document.getElementById('schedule-body');
+    tbody.innerHTML = '';
+    scheduleData.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${row.day}</td>
+        <td>${row.time}</td>
+        <td>${row.subject}</td>
+        <td>${row.teacher}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // โหลดคะแนน
+  function loadGrades() {
+    const tbody = document.getElementById('grades-body');
+    tbody.innerHTML = '';
+    gradesData.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${row.subject}</td>
+        <td>${row.score}</td>
+        <td>${row.grade}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // โหลดประกาศ
+  function loadAnnouncements() {
+    const ul = document.getElementById('announcement-list');
+    ul.innerHTML = '';
+    announcements.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      ul.appendChild(li);
+    });
+  }
+
+  // โหลดงานที่ส่งล่าสุด
+  function loadAssignments() {
+    const ul = document.getElementById('assignment-list');
+    ul.innerHTML = '';
+    assignmentSubmissions.slice(-5).reverse().forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = `${item.subject} - ${item.fileName} (ส่งเมื่อ ${item.time})`;
+      ul.appendChild(li);
+    });
+  }
+
+  // โหลดแชท
+  function loadChatMessages() {
+    const container = document.getElementById('chat-messages');
+    container.innerHTML = '';
+    chatMessages.forEach(msg => {
+      const div = document.createElement('div');
+      div.classList.add('chat-message');
+      div.classList.add(msg.sender === 'user' ? 'user' : 'admin');
+      div.textContent = msg.text;
+      container.appendChild(div);
+    });
+    container.scrollTop = container.scrollHeight;
+  }
+
+  // Init page content
+  function init() {
+    document.getElementById('user-name').textContent = currentUser.name;
+    document.getElementById('profile-username').textContent = currentUser.username;
+    document.getElementById('profile-role').textContent = currentUser.role;
+
+    loadSchedule();
+    loadGrades();
+    loadAnnouncements();
+    loadAssignments();
+    loadChatMessages();
+  }
+
+  // Event เมนู
+  document.querySelectorAll('nav.sidebar a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const page = link.getAttribute('data-page');
+      switchPage(page);
+    });
+  });
+
+  // ฟอร์มลงทะเบียน
+  document.getElementById('registration-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = e.target.studentName.value.trim();
+    const cls = e.target.classSelect.value;
+    const contact = e.target.parentContact.value.trim();
+    if(name && cls && contact){
+      document.getElementById('registration-result').textContent = `ลงทะเบียนเรียนเรียบร้อย: ${name} ชั้นเรียน ${cls}`;
+      e.target.reset();
+    } else {
+      document.getElementById('registration-result').textContent = `กรุณากรอกข้อมูลให้ครบถ้วน`;
+      document.getElementById('registration-result').style.color = 'red';
+    }
+  });
+
+  // ฟอร์มส่งงาน
+  document.getElementById('assignment-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const subject = e.target.assignmentSubject.value;
+    const fileInput = e.target.assignmentFile;
+    if(subject && fileInput.files.length > 0){
+      const fileName = fileInput.files[0].name;
+      const time = new Date().toLocaleString();
+      assignmentSubmissions.push({ subject, fileName, time });
+      loadAssignments();
+      document.getElementById('assignment-result').textContent = `ส่งงานสำเร็จ: ${fileName}`;
+      e.target.reset();
+    } else {
+      document.getElementById('assignment-result').textContent = `กรุณาเลือกวิชาและไฟล์งาน`;
+      document.getElementById('assignment-result').style.color = 'red';
+    }
+  });
+
+  // ฟอร์มแชท
+  document.getElementById('chat-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim();
+    if(text){
+      chatMessages.push({ sender: 'user', text });
+      // ตอบกลับอัตโนมัติ (จำลอง)
+      chatMessages.push({ sender: 'admin', text: `คุณพิมพ์ว่า: "${text}"` });
+      loadChatMessages();
+      input.value = '';
+      input.focus();
+    }
+  });
+
+  // ปุ่ม logout (ตัวอย่าง)
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    alert('ออกจากระบบเรียบร้อย');
+    // ทำการ redirect หรือ reset หน้าเว็บตามต้องการ
+  });
+  document.getElementById('btn-logout-profile').addEventListener('click', () => {
+    alert('ออกจากระบบเรียบร้อย');
+  });
+
+  // เริ่มต้น
+  init();
+  switchPage('dashboard');
+</script>
+
+</body>
+</html>

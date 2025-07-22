@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@600&display=swap');
+
+.logo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 6px solid #1a237e;
+  background: white;
+  position: relative;
+  font-family: 'Sarabun', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.logo::before {
+  content: "📚";
+  font-size: 40px;
+  position: absolute;
+  top: 20px;
+}
+
+.logo::after {
+  content: "โรงเรียนวัดหนองจวง\nจังหวัดกำแพงเพชร";
+  white-space: pre-line;
+  font-size: 14px;
+  color: #1a237e;
+  position: absolute;
+  bottom: 40px;
+  text-align: center;
+  line-height: 1.4;
+}
